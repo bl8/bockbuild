@@ -29,6 +29,7 @@ class BansheePackages:
 			'gtk+.py',
 			'gconf-dummy.py',
 			'libproxy.py',
+			'libgpg-error.py',
 			'libgcrypt.py',
 			'gnutls.py',
 			'libsoup.py',
