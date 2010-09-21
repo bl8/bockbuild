@@ -12,7 +12,7 @@ Making a release:
 
       $ ./profile.darwin.py -e > darwin.env
 	  $ source darwin.env
-	  $ pushd pushd ../../solitary
+	  $ pushd ../../solitary
 	  $ make
 	  $ popd
 	  $ ./profile.darwin.py -z
