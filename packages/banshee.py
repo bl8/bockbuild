@@ -1,13 +1,10 @@
 class BansheePackage (Package):
 	def __init__ (self):
-		Package.__init__ (self, 'banshee-1', '1.7.4')
+		Package.__init__ (self, 'banshee-1', '1.7.6')
 
 		self.sources = [
-			'http://download.banshee.fm/banshee/unstable/%{version}/%{name}-%{version}.tar.bz2',
-			'patches/banshee-gnome-doc-utils-fix.patch'
+			'http://download.banshee.fm/banshee/unstable/%{version}/%{name}-%{version}.tar.bz2'
 		]
-
-		self.configure = './autogen.sh --prefix=%{prefix}'
 
 		self.configure_flags = [
 			'--disable-docs',
@@ -19,6 +16,7 @@ class BansheePackage (Package):
 		self.configure_flags.extend ([
 			'--disable-mtp',
 			'--disable-daap',
+			'--disable-appledevice',
 			'--disable-ipod'
 		])
 
@@ -35,9 +33,5 @@ class BansheePackage (Package):
 #			self.configure_flags.extend ([
 #				'--with-vendor-build-id="banshee.fm Linux i386"'
 #			])
-
-	def prep (self):
-		Package.prep (self)
-		self.sh ('patch -p1 < "%{sources[1]}"')
 
 BansheePackage ()
