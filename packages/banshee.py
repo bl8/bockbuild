@@ -1,9 +1,9 @@
 class BansheePackage (Package):
 	def __init__ (self):
-		Package.__init__ (self, 'banshee-1', '1.7.6')
+		Package.__init__ (self, 'banshee-1', '1.8.0')
 
 		self.sources = [
-			'http://download.banshee.fm/banshee/unstable/%{version}/%{name}-%{version}.tar.bz2'
+			'http://download.banshee.fm/banshee/stable/%{version}/%{name}-%{version}.tar.bz2'
 		]
 
 		self.configure_flags = [
@@ -27,7 +27,7 @@ class BansheePackage (Package):
 				'--disable-mtp',
 				'--disable-daap',
 				'--disable-ipod',
-				'--with-vendor-build-id="banshee-project.org OSX 10.5+ i386/Intel"'
+				'--with-vendor-build-id="banshee.fm OSX 10.5+ i386/Intel"'
 			])
 #		elif Package.profile.name == 'linux':
 #			self.configure_flags.extend ([
