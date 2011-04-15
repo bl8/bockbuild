@@ -3,10 +3,8 @@
 # This is the magic path used by glick
 BUNDLE_ROOT=/proc/self/fd/1023
 
-prefix=$BUNDLE_ROOT
-libdir=$BUNDLE_ROOT/lib
 exec_asm="Banshee.exe"
-MONO_EXE="$BUNDLE_ROOT/lib/banshee-1/$exec_asm"
+MONO_EXE="$BUNDLE_ROOT/lib/banshee/$exec_asm"
 BANSHEE_EXEC_NAME=banshee
 
 # Don't touch the real config directory
@@ -14,8 +12,8 @@ export XDG_CONFIG_HOME=$HOME/.config-glick
 BANSHEE_CONFIG_DIR="$XDG_CONFIG_HOME/banshee-1"
 
 export PATH=$BUNDLE_ROOT/bin${PATH:+:$PATH}
-export LD_LIBRARY_PATH=$BUNDLE_ROOT/lib/banshee-1:$BUNDLE_ROOT/lib/banshee-1/Extensions:$BUNDLE_ROOT/lib/banshee-1/Backends:$BUNDLE_ROOT/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
-export GST_PLUGIN_PATH=$BUNDLE_ROOT/lib/banshee-1/gstreamer-0.10${GST_PLUGIN_PATH:+:$GST_PLUGIN_PATH}
+export LD_LIBRARY_PATH=$BUNDLE_ROOT/lib/banshee:$BUNDLE_ROOT/lib/banshee/Extensions:$BUNDLE_ROOT/lib/banshee/Backends:$BUNDLE_ROOT/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}
+export GST_PLUGIN_PATH=$BUNDLE_ROOT/lib/banshee/gstreamer-0.10${GST_PLUGIN_PATH:+:$GST_PLUGIN_PATH}
 export GST_REGISTRY="$BANSHEE_CONFIG_DIR/gstreamer-registry.bin"
 
 GTK_THEME=Shiki-Brave
