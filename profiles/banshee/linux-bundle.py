@@ -25,7 +25,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 			'bin/mono',
 			'lib/mono/2.0/gmcs.exe',
 			'lib/mono/gac/Mono.Addins.CecilReflector',
-			'lib/banshee-1',
+			'lib/banshee',
 			'lib/pango',
 			'lib/gtk-2.0/2.10.0/loaders',
 			'lib/gtk-2.0/2.10.0/engines',
@@ -33,7 +33,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 			'lib/gdk-pixbuf-2.0/2.10.0/loaders',
 			'lib/gdk-pixbuf-2.0/2.10.0/loaders.cache',
 			'lib/gstreamer-0.10',
-			'share/banshee-1',
+			'share/banshee',
 			'share/locale',
 			'etc/gtk-2.0',
 			'etc/mono/config',
@@ -51,7 +51,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 		])
 
 	def bundle (self):
-		banshee_path = os.path.join (self.prefix, 'lib', 'banshee-1')
+		banshee_path = os.path.join (self.prefix, 'lib', 'banshee')
 		os.environ['MONO_PATH'] = ':'.join ([
 			banshee_path,
 			os.path.join (banshee_path, 'Extensions'),
@@ -65,7 +65,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 
 		for nuke in [ 'AudioCd', 'Dap', 'Dap.MassStorage' ]:
 			for path in glob.glob (os.path.join (self.bundle_output_dir,
-				'lib', 'banshee-1', 'Extensions', 'Banshee.%s*' % nuke)):
+				'lib', 'banshee', 'Extensions', 'Banshee.%s*' % nuke)):
 				os.unlink (path)
 
 		for nuke in [ 'gtk20-properties.mo', 'gettext-tools.mo' ]:
@@ -73,7 +73,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 				'share', 'locale', '*', 'LC_MESSAGES', '%s' % nuke)):
 				os.unlink (path)
 
-		for nuke in [ 'banshee-1', 'banshee-1/gstreamer-0.10',
+		for nuke in [ 'banshee', 'banshee/gstreamer-0.10',
 				'gdk-pixbuf-2.0/2.10.0/loaders', 'gtk-2.0/2.10.0/engines' ]:
 			for path in glob.glob (os.path.join (self.bundle_output_dir,
 				'lib', '%s' % nuke, '*.a')):
