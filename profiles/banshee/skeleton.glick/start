@@ -16,8 +16,17 @@ export LD_LIBRARY_PATH=$BUNDLE_ROOT/lib/banshee:$BUNDLE_ROOT/lib/banshee/Extensi
 export GST_PLUGIN_PATH=/usr/lib/gstreamer-0.10:/usr/local/lib/gstreamer-0.10:$BUNDLE_ROOT/lib/banshee/gstreamer-0.10${GST_PLUGIN_PATH:+:$GST_PLUGIN_PATH}
 export GST_REGISTRY="$BANSHEE_CONFIG_DIR/gstreamer-registry.bin"
 
+# By default we use the bundled theme
 GTK_THEME=Shiki-Brave
-export GTK2_RC_FILES=$BUNDLE_ROOT/share/themes/${GTK_THEME}/gtk-2.0/gtkrc
+THEME_PREFIX=$BUNDLE_ROOT
+
+# Try to figure out if we're running in GNOME, and use the current theme
+GCONFTOOL=$(which gconftool || which gconftool-2)
+if [ x"$GCONFTOOL" != x"" ]; then
+	GTK_THEME=$($GCONFTOOL --get /desktop/gnome/interface/gtk_theme)
+	THEME_PREFIX=/usr
+fi
+export GTK2_RC_FILES=${THEME_PREFIX}/share/themes/${GTK_THEME}/gtk-2.0/gtkrc
 
 [ -n "$BANSHEE_DEBUG" -o -f "${BANSHEE_CONFIG_DIR}/always-debug" ] && BANSHEE_DEBUG="--debug"
 BANSHEE_REDIRECT_LOG="${BANSHEE_CONFIG_DIR}/log"
