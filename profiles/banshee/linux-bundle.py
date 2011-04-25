@@ -35,6 +35,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 			'lib/gstreamer-0.10',
 			'share/banshee',
 			'share/locale',
+			'etc/fonts',
 			'etc/gtk-2.0',
 			'etc/mono/config',
 			'etc/mono/2.0/machine.config',
