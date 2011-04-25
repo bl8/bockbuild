@@ -40,6 +40,10 @@ for arg in $*; do
 	case "x--client=" in ("x${arg:0:9}")
 		BANSHEE_CLIENT="${arg:9}"
 	esac
+
+	case "x--use-bundled-theme" in ("x$arg")
+		BANSHEE_BUNDLED_THEME="yes"
+	esac
 done
 
 if [ ! -z "$BANSHEE_CLIENT" ]; then
@@ -50,11 +54,14 @@ fi
 GTK_THEME=Shiki-Brave
 THEME_PREFIX=$BUNDLE_ROOT
 
-# Try to figure out if we're running in GNOME, and use the current theme
-GCONFTOOL=$(which gconftool || which gconftool-2)
-if [ x"$GCONFTOOL" != x"" ]; then
-	GTK_THEME=$($GCONFTOOL --get /desktop/gnome/interface/gtk_theme)
-	THEME_PREFIX=/usr
+if [ -z "$BANSHEE_BUNDLED_THEME" ]; then
+	# Try to figure out if we're running in GNOME, and use the current theme
+	GCONFTOOL=$(which gconftool || which gconftool-2)
+	if [ x"$GCONFTOOL" != x"" ]; then
+		GTK_THEME=$($GCONFTOOL --get /desktop/gnome/interface/gtk_theme)
+		THEME_PREFIX=/usr
+		echo "Trying to use the current GTK theme : $GTK_THEME"
+	fi
 fi
 export GTK2_RC_FILES=${THEME_PREFIX}/share/themes/${GTK_THEME}/gtk-2.0/gtkrc
 
