@@ -70,7 +70,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 				'lib', 'banshee', 'Extensions', 'Banshee.%s*' % nuke)):
 				os.unlink (path)
 
-		for nuke in [ 'gtk20-properties.mo', 'gettext-tools.mo' ]:
+		for nuke in [ 'gtk20-properties.mo', 'gettext-tools.mo', 'gtk-engines.mo' ]:
 			for path in glob.glob (os.path.join (self.bundle_output_dir,
 				'share', 'locale', '*', 'LC_MESSAGES', '%s' % nuke)):
 				os.unlink (path)

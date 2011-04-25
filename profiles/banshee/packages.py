@@ -56,6 +56,11 @@ class BansheePackages:
 			'murrine.py'
 		])
 
+		if isinstance (self, GlickProfile):
+			self.packages.extend ([
+				'gtk-engines.py'
+			])
+
 		# Codecs
 		self.packages.extend ([
 			'libogg.py',
