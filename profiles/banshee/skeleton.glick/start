@@ -16,6 +16,36 @@ export LD_LIBRARY_PATH=$BUNDLE_ROOT/lib/banshee:$BUNDLE_ROOT/lib/banshee/Extensi
 export GST_PLUGIN_PATH=/usr/lib/gstreamer-0.10:/usr/local/lib/gstreamer-0.10:$BUNDLE_ROOT/lib/banshee/gstreamer-0.10${GST_PLUGIN_PATH:+:$GST_PLUGIN_PATH}
 export GST_REGISTRY="$BANSHEE_CONFIG_DIR/gstreamer-registry.bin"
 
+[ -n "$BANSHEE_DEBUG" -o -f "${BANSHEE_CONFIG_DIR}/always-debug" ] && BANSHEE_DEBUG="--debug"
+[ -n "$BANSHEE_TRACE" ] && BANSHEE_TRACE="--trace=$BANSHEE_TRACE"
+[ -n "$BANSHEE_PROFILE" ] && BANSHEE_PROFILE="--profile=$BANSHEE_PROFILE"
+
+for arg in $*; do
+	case "x--debug" in ("x$arg")
+		BANSHEE_DEBUG=$arg
+	esac
+
+	case "x--trace=" in ("x${arg:0:8}")
+		BANSHEE_TRACE=$arg
+	esac
+
+	case "x--profile=" in ("x${arg:0:10}")
+		BANSHEE_PROFILE=$arg
+	esac
+
+	case "x--redirect-log" in ("x$arg")
+		[ -z "$(pidof $BANSHEE_EXEC_NAME)" ] && BANSHEE_REDIRECT_LOG="${BANSHEE_CONFIG_DIR}/log"
+	esac
+
+	case "x--client=" in ("x${arg:0:9}")
+		BANSHEE_CLIENT="${arg:9}"
+	esac
+done
+
+if [ ! -z "$BANSHEE_CLIENT" ]; then
+	BANSHEE_CLIENT="--client=${BANSHEE_CLIENT}"
+fi
+
 # By default we use the bundled theme
 GTK_THEME=Shiki-Brave
 THEME_PREFIX=$BUNDLE_ROOT
@@ -28,10 +58,7 @@ if [ x"$GCONFTOOL" != x"" ]; then
 fi
 export GTK2_RC_FILES=${THEME_PREFIX}/share/themes/${GTK_THEME}/gtk-2.0/gtkrc
 
-[ -n "$BANSHEE_DEBUG" -o -f "${BANSHEE_CONFIG_DIR}/always-debug" ] && BANSHEE_DEBUG="--debug"
-BANSHEE_REDIRECT_LOG="${BANSHEE_CONFIG_DIR}/log"
-
-# We are testing the SGen compacting GC
+# Testing the SGen compacting GC, disabled for now
 #export MONO_ENV_OPTIONS="--gc=sgen"
 
 if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
@@ -40,8 +67,11 @@ if [ -n "$BANSHEE_DEBUG" -o -n "$BANSHEE_TRACE" -o -n "$BANSHEE_PROFILE" ]; then
 fi
 
 # Finally - environment is set up, time to run our beloved
-exec_args="-a $BANSHEE_EXEC_NAME mono $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG"
+exec_args="-a $BANSHEE_EXEC_NAME mono $MONO_OPTIONS $MONO_EXE $BANSHEE_DEBUG $BANSHEE_CLIENT"
 
-mkdir -p `dirname "$BANSHEE_REDIRECT_LOG"`
-(echo "exec $exec_args " "$@"; echo; exec $exec_args "$@") &> $BANSHEE_REDIRECT_LOG
-
+if [ -z "$BANSHEE_REDIRECT_LOG" ]; then
+	exec $exec_args "$@"
+else
+	mkdir -p `dirname "$BANSHEE_REDIRECT_LOG"`
+	(echo "exec $exec_args " "$@"; echo; exec $exec_args "$@") &> $BANSHEE_REDIRECT_LOG
+fi
