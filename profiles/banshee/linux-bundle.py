@@ -28,6 +28,7 @@ class BansheeLinuxBundleProfile (GlickProfile, BansheePackages):
 			'lib/mono/gac/Mono.Addins.CecilReflector',
 			'lib/banshee',
 			'lib/pango',
+			'lib/gio/modules',
 			'lib/gtk-2.0/2.10.0/loaders',
 			'lib/gtk-2.0/2.10.0/engines',
 			'lib/gtk-2.0/2.10.0/immodules',
