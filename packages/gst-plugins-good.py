@@ -1,7 +1,7 @@
 class GstPluginsGoodPackage (GstreamerPackage):
 	def __init__ (self):
 		GstreamerPackage.__init__ (self, 'gstreamer', 'gst-plugins-good',
-			'0.10.28', configure_flags = [
+			'0.10.29', configure_flags = [
 				'--disable-gtk-doc',
 				'--disable-gdk_pixbuf',
 				'--disable-cairo',
