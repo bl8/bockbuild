@@ -1,10 +1,8 @@
-class BansheePackage (Package):
+class BansheePackage (GnomePackage):
 	def __init__ (self):
-		Package.__init__ (self, 'banshee', '2.0.0')
-
-		self.sources = [
-			'http://download.banshee.fm/banshee/stable/%{version}/%{name}-%{version}.tar.bz2'
-		]
+		GnomePackage.__init__ (self, 'banshee',
+			version_major = '2.1',
+			version_minor = '0')
 
 #		self.configure = './autogen.sh --prefix=%{prefix}'
 
@@ -16,10 +14,8 @@ class BansheePackage (Package):
 		]
 
 		self.configure_flags.extend ([
-			'--disable-hal',
 			'--disable-mtp',
 			'--disable-daap',
-			'--disable-ipod',
 			'--disable-appledevice'
 		])
 
@@ -32,9 +28,9 @@ class BansheePackage (Package):
 				'--disable-ipod',
 				'--with-vendor-build-id="banshee.fm OSX 10.5+ i386/Intel"'
 			])
-#		elif Package.profile.name == 'linux':
-#			self.configure_flags.extend ([
-#				'--with-vendor-build-id="banshee.fm Linux i386"'
-#			])
+		elif Package.profile.name == 'glick':
+			self.configure_flags.extend ([
+				'--with-vendor-build-id="banshee.fm Linux bundle"'
+			])
 
 BansheePackage ()

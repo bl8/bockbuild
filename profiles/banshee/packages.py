@@ -91,10 +91,20 @@ class BansheePackages:
 			'mono.py',
 			'gtk-sharp.py',
 			'mono-addins.py',
-			'ndesk-dbus.py',
-			'ndesk-dbus-glib.py',
+			'dbus-sharp.py',
+			'dbus-sharp-glib.py',
 			'taglib-sharp.py',
 		])
+
+		# Hardware detection
+		if isinstance (self, GlickProfile):
+			self.packages.extend ([
+				'udev.py',
+				'gio-sharp.py',
+				'gtk-sharp-beans.py',
+				'gudev-sharp.py',
+				'gkeyfile-sharp.py'
+			])
 
 		if isinstance (self, DarwinProfile):
 			self.packages.extend ([
