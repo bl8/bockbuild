@@ -2,7 +2,7 @@ class BansheePackage (GnomePackage):
 	def __init__ (self):
 		GnomePackage.__init__ (self, 'banshee',
 			version_major = '2.1',
-			version_minor = '0')
+			version_minor = '3')
 
 #		self.configure = './autogen.sh --prefix=%{prefix}'
 
