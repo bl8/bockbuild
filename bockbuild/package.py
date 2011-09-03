@@ -186,7 +186,7 @@ class GnomePackage (Package):
 			override_properties = override_properties)
 
 GnomePackage.default_sources = [
-	'http://ftp.gnome.org/pub/gnome/sources/%{name}/%{version_major}/%{name}-%{version}.tar.gz'
+	'http://ftp.gnome.org/pub/gnome/sources/%{name}/%{version_major}/%{name}-%{version}.tar.bz2'
 ]
 
 class GnuPackage (Package): pass
